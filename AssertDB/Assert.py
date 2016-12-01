@@ -3,8 +3,8 @@ import smtplib
 import email
 import time
 
-class AssertDB(object):
-    """Expand a patch (or other file) with a keyword.
+class Assert(object):
+    """Check an assumption against a db.
         args:
             assertions: list of lists, where each element
                         is a list with this structure:

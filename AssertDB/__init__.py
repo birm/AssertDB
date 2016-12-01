@@ -1,2 +1,2 @@
-__all__ = ["AssertDB"]
-from AssertDB.AssertDB import AssertDB
+__all__ = ["Assert"]
+from AssertDB.Assert import Assert

@@ -8,4 +8,4 @@ install:
     - travis_retry python setup.py install
 
 script:
-    - py.test AssertDB/tests/test_default_init.py
+    - py.test AssertDB/Tests/test_default_init.py

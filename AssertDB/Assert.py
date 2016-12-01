@@ -3,7 +3,7 @@ import smtplib
 import email
 import time
 
-class Assert(object):
+class Assertion(object):
     """Check an assumption against a db.
         args:
             assertions: list of lists, where each element

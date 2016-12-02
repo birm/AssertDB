@@ -14,7 +14,8 @@ class Assertion(object):
                 comparision (eq, gt, lt, ne)
                 target (value to compare against)
                 where logic
-            email: an address to send exceptions to."""
+            email: an address to send exceptions to.
+                if email is blank, then it returns the results."""
 
     def __init__(self, assertions=[["count(*)", "localhost", "mysql.user",
                                     "ne", 0, "TRUE"]], email="root@localhost"):

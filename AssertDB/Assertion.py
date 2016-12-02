@@ -23,7 +23,10 @@ class Assertion(object):
         self.email = email
 
     def _compare(self, result, target, comparison):
-        """Perform a comparison per specifications."""
+        """
+        Perform a comparison per specifications.
+        Returns a boolean with the result of the comparison.
+        """
         if comparison == "ne":
             return not result == target
         if comparison == "eq":
@@ -36,7 +39,10 @@ class Assertion(object):
             raise ValueError("Invalid comparison operator " + comparison)
 
     def _fails(self, select, host, table, comparison, target, where):
-        """Check if the conditions are met, return False if OK."""
+        """
+        Check if the conditions are met.
+        Return False if OK, True if issue.
+        """
         if host == "localhost":
             command = """mysql -N "select {0} from {1} where {2}" \
             | awk '{print $1}'""".format(select, table, where)
@@ -50,8 +56,11 @@ class Assertion(object):
             return result
 
     def _notify(self, result, args):
+        """
+        Send an email to notify with results.
+        """
         msg = email.mime.text.MimeText(repr(args) + " got " + result)
-        msg['Subject'] = "[AssertDB] failed on " + args[1]+ "." + args[2]
+        msg['Subject'] = "[AssertDB] failed on " + args[1] + "." + args[2]
         msg['To'] = self.email
         try:
             smtp = smtplib.SMTP("localhost")
@@ -60,6 +69,10 @@ class Assertion(object):
             raise RuntimeError("Email send failed.")
 
     def check(self):
+        """
+        Check each assertion given.
+        Returns nothing, but sends emails with assertions.
+        """
         for x in self.assertions:
             result = self._fails(*x)
             if result:

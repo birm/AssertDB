@@ -10,5 +10,5 @@ This tool allows for quick checks of assertions, and allows for use ranging from
 Write a query, its desired result, and a on-fail notification method.
 
 ## Hopeful Features
-* Simpler programatic output
+* File input
 * More CI Testing

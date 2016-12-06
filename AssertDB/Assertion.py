@@ -23,6 +23,11 @@ class Assertion(object):
         self.assertions = assertions
         self.email = email
 
+    def _fromfile(self):
+        """
+        Get the assertion infrormation from a yaml file.
+        """
+
     def _compare(self, result, target, comparison):
         """
         Perform a comparison per specifications.
@@ -58,16 +63,19 @@ class Assertion(object):
 
     def _notify(self, result, args):
         """
-        Send an email to notify with results.
+        Send an email to notify with results, or return the result.
         """
-        msg = email.mime.text.MimeText(repr(args) + " got " + result)
-        msg['Subject'] = "[AssertDB] failed on " + args[1] + "." + args[2]
-        msg['To'] = self.email
-        try:
-            smtp = smtplib.SMTP("localhost")
-            smtp.sendmail(self.email, msg.as_string())
-        except:
-            raise RuntimeError("Email send failed.")
+        if email == "":
+            print(result)
+        else:
+            msg = email.mime.text.MimeText(repr(args) + " got " + result)
+            msg['Subject'] = "[AssertDB] failed on " + args[1] + "." + args[2]
+            msg['To'] = self.email
+            try:
+                smtp = smtplib.SMTP("localhost")
+                smtp.sendmail(self.email, msg.as_string())
+            except:
+                raise RuntimeError("Email send failed.")
 
     def check(self):
         """
@@ -85,6 +93,7 @@ if __name__ == "__main__":
     args = ['root@localhost', "count(*)", "mysql.user", "ne", 0, "TRUE"]
     for x in range(0, len(sys.argv)-1):
         args[x] = sys.argv[x]
-    searcher = AssertDB(args[0], [args[1:]])
+    searcher = Assertion(args[0], [args[1:]])
     searcher.check()
-    print("Completed the expansion; check files for result")
+    if email != "":
+        print("Completed the checks; check email for result")

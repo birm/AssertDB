@@ -9,3 +9,6 @@ install:
 
 script:
     - py.test AssertDB/Tests/test_default_init.py
+
+notifications:
+  slack: rbirm:fjJKXGPbjyXSGAKKaOU6GWEh
